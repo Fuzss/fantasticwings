@@ -10,3 +10,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Update to Minecraft 1.20.1
+- Note that this port is based on the legacy version for Minecraft 1.20.4; hence some newer features might be missing
+- Known bug: Unable to start flight after changing dimensions, requires you to leave and join the world again (Fabric
+  only, fine on Forge)
