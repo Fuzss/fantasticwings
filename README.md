@@ -26,6 +26,7 @@
 | Branch | Status | Changelog | Downloads |
 | --- | --- | --- | --- |
 | [1.20.4](https://github.com/Fuzss/fantastic-wings/tree/1.20.4) | ❌&nbsp;Archived | [CHANGELOG.md](https://github.com/Fuzss/fantastic-wings/blob/1.20.4/CHANGELOG.md) | <img src="https://cdn.simpleicons.org/curseforge" width="14" />&nbsp;[CurseForge](https://www.curseforge.com/members/fuzs_/projects)<br /><img src="https://cdn.simpleicons.org/modrinth" width="14" />&nbsp;[Modrinth](https://modrinth.com/user/Fuzs) |
+| [1.20.1](https://github.com/Fuzss/fantastic-wings/tree/1.20.1) | ⚠️&nbsp;Bugfixes&nbsp;only | [CHANGELOG.md](https://github.com/Fuzss/fantastic-wings/blob/1.20.1/CHANGELOG.md) | <img src="https://cdn.simpleicons.org/curseforge" width="14" />&nbsp;[CurseForge](https://www.curseforge.com/members/fuzs_/projects)<br /><img src="https://cdn.simpleicons.org/modrinth" width="14" />&nbsp;[Modrinth](https://modrinth.com/user/Fuzs) |
 
 ### Minecraft 1.18.x
 
