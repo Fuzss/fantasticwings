@@ -32,14 +32,6 @@ ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.${ modId }]]
-modId = "forgeconfigapiport"
-mandatory = true
-type = "required"
-versionRange = "*"
-ordering = "NONE"
-side = "BOTH"
-
-[[dependencies.${ modId }]]
 modId = "puzzleslib"
 mandatory = true
 type = "required"

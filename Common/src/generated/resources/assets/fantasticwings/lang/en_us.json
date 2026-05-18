@@ -56,8 +56,7 @@
   "item.minecraft.tipped_arrow.effect.parrot_wings": "Arrow of Parrot Wings",
   "item.minecraft.tipped_arrow.effect.slime_wings": "Arrow of Slime Wings",
   "itemGroup.fantasticwings.main": "Fantastic Wings",
-  "key.categories.fantasticwings": "Fantastic Wings",
-  "key.toggle_flight": "Toggle Flight",
-  "subtitles.item.armor.equip_wings": "Wings rustle",
-  "wings.wingsNotFound": "No such wings: %s"
+  "key.category.fantasticwings.main": "Fantastic Wings",
+  "key.fantasticwings.toggle_flight": "Toggle Flight",
+  "subtitles.item.armor.equip_wings": "Wings rustle"
 }

@@ -2,7 +2,6 @@ package fuzs.fantasticwings.data.client;
 
 import fuzs.fantasticwings.FantasticWings;
 import fuzs.fantasticwings.client.init.ClientModRegistry;
-import fuzs.fantasticwings.commands.WingsArgument;
 import fuzs.fantasticwings.commands.WingsCommand;
 import fuzs.fantasticwings.flight.apparatus.FlightApparatusImpl;
 import fuzs.fantasticwings.init.ModRegistry;
@@ -21,9 +20,8 @@ public class ModLanguageProvider extends AbstractLanguageProvider {
     @Override
     public void addTranslations(TranslationBuilder builder) {
         builder.addCreativeModeTab(FantasticWings.MOD_ID, FantasticWings.MOD_NAME);
-        builder.addKeyCategory(FantasticWings.MOD_ID, FantasticWings.MOD_NAME);
+        builder.add(ClientModRegistry.FLY_KEY_MAPPING.getCategory(), FantasticWings.MOD_NAME);
         builder.add(ClientModRegistry.FLY_KEY_MAPPING, "Toggle Flight");
-        builder.add(WingsArgument.KEY_WINGS_NOT_FOUND, "No such wings: %s");
         builder.add(WingsCommand.KEY_GIVE_WINGS_SINGLE, "Applied wings to %s");
         builder.add(WingsCommand.KEY_GIVE_WINGS_MULTIPLE, "Applied wings to %s targets");
         builder.add(WingsCommand.KEY_TAKE_WINGS_SINGLE, "Removed wings from %s");

@@ -8,6 +8,7 @@ import fuzs.fantasticwings.util.CubicBezier;
 import fuzs.fantasticwings.util.MathHelper;
 import fuzs.puzzleslib.api.capability.v3.data.CapabilityComponent;
 import fuzs.puzzleslib.api.network.v3.PlayerSet;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -89,9 +90,8 @@ public final class FlightCapability extends CapabilityComponent<Player> {
     }
 
     public boolean canSlowlyDescend() {
-        return this.holder.flightApparatus()
-                .isUsableForSlowlyDescending(this.getHolder()) && this.canUseWings() && (this.isFlying() || !this.getHolder()
-                .isDescending() && !this.getHolder().getAbilities().mayfly);
+        return this.holder.flightApparatus().isUsableForSlowlyDescending(this.getHolder()) && this.canUseWings() && (
+                this.isFlying() || !this.getHolder().isDescending());
     }
 
     private void onWornUpdate() {
@@ -112,8 +112,7 @@ public final class FlightCapability extends CapabilityComponent<Player> {
                 player.setDeltaMovement(player.getDeltaMovement()
                         .add(vx * vxz * speed,
                                 vy * speed + Y_BOOST * (player.getXRot() > 0.0F ? elevationBoost : 1.0D),
-                                vz * vxz * speed
-                        ));
+                                vz * vxz * speed));
                 // similar to swimming where jumping and sneaking help with ascending / descending
                 if (player.jumping) {
                     // with the elevation boost this can get quite crazy, so don't add as much as when descending
@@ -145,7 +144,7 @@ public final class FlightCapability extends CapabilityComponent<Player> {
                 this.setTimeFlying(this.timeFlying + 1);
             } else if (player.isLocalPlayer() && player.onGround()) {
                 this.setIsFlying(false, PlayerSet.ofNone());
-                FantasticWings.NETWORK.sendMessage(new ServerboundControlFlyingMessage(false));
+                FantasticWings.NETWORK.sendToServer(new ServerboundControlFlyingMessage(false));
             }
         } else if (this.timeFlying > INITIAL_TIME_FLYING) {
             this.setTimeFlying(this.timeFlying - 1);
@@ -162,14 +161,14 @@ public final class FlightCapability extends CapabilityComponent<Player> {
     }
 
     @Override
-    public void write(CompoundTag compoundTag) {
+    public void write(CompoundTag compoundTag, HolderLookup.Provider registries) {
         compoundTag.putBoolean(KEY_IS_FLYING, this.isFlying);
         compoundTag.putInt(KEY_TIME_FLYING, this.timeFlying);
         compoundTag.put(KEY_WING_TYPE, this.holder.writeToNbtTag());
     }
 
     @Override
-    public void read(CompoundTag compoundTag) {
+    public void read(CompoundTag compoundTag, HolderLookup.Provider registries) {
         this.isFlying = compoundTag.getBoolean(KEY_IS_FLYING);
         this.timeFlying = compoundTag.getInt(KEY_TIME_FLYING);
         this.holder = FlightApparatus.Holder.readFromNbtTag(compoundTag.getCompound(KEY_WING_TYPE));
