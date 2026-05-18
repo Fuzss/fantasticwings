@@ -23,7 +23,7 @@ abstract class PlayerRendererMixin<E extends Avatar & ClientAvatarEntity> extend
 
     @Inject(method = "setupRotations(Lnet/minecraft/client/renderer/entity/state/AvatarRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;FF)V",
             at = @At("TAIL"))
-    protected void setupRotations(AvatarRenderState renderState, PoseStack poseStack, float bodyRot, float scale, CallbackInfo callback) {
-        ClientEventHandler.setupPlayerRotations(renderState, poseStack);
+    protected void setupRotations(AvatarRenderState state, PoseStack poseStack, float bodyRot, float entityScale, CallbackInfo callback) {
+        ClientEventHandler.setupPlayerRotations(state, poseStack);
     }
 }

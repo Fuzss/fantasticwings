@@ -11,9 +11,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 abstract class EntityMixin {
 
     @Inject(method = "turn", at = @At("TAIL"))
-    public void turn(double yRot, double xRot, CallbackInfo callback) {
+    public void turn(double xo, double yo, CallbackInfo callback) {
         // the method is only ever called client-side
-        float deltaYaw = (float) yRot * 0.15F;
+        float deltaYaw = (float) xo * 0.15F;
         ClientEventHandler.onTurn(Entity.class.cast(this), deltaYaw);
     }
 }

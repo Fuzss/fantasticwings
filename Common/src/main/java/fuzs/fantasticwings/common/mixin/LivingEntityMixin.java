@@ -30,8 +30,8 @@ abstract class LivingEntityMixin extends Entity {
     }
 
     @Inject(method = "tickHeadTurn", at = @At("HEAD"), cancellable = true)
-    protected void tickHeadTurn(float yRot, CallbackInfo callback) {
-        if (ServerEventHandler.onUpdateBodyRotation(LivingEntity.class.cast(this), yRot)) {
+    protected void tickHeadTurn(float yBodyRotT, CallbackInfo callback) {
+        if (ServerEventHandler.onUpdateBodyRotation(LivingEntity.class.cast(this), yBodyRotT)) {
             callback.cancel();
         }
     }
