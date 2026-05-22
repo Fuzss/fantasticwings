@@ -134,9 +134,12 @@ public record Flight(Optional<Holder<FlightApparatus>> wings, boolean isFlying, 
         }
     }
 
+    /**
+     * @see Player#travel(Vec3)
+     */
     private void onWornUpdate(Player player) {
         if (this.isFlying()) {
-            float speed = Mth.clampedLerp(MIN_SPEED, MAX_SPEED, player.zza);
+            float speed = Mth.clampedLerp(player.zza, MIN_SPEED, MAX_SPEED);
             float elevationBoost = MathHelper.transform(Math.abs(player.getXRot()), 45.0F, 90.0F, 1.0F, 0.0F);
             float pitch = -MathHelper.toRadians(player.getXRot() - PITCH_OFFSET * elevationBoost);
             float yaw = -MathHelper.toRadians(player.getYRot()) - MathHelper.PI;

@@ -86,8 +86,7 @@ public class ClientEventHandler {
     }
 
     public static void onExtractEntityRenderState(Entity entity, EntityRenderState entityRenderState, float partialTick) {
-        if (entity instanceof AbstractClientPlayer player
-                && entityRenderState instanceof AvatarRenderState playerRenderState) {
+        if (entity instanceof AbstractClientPlayer player && entityRenderState instanceof AvatarRenderState state) {
             FlightView flightView = ClientModRegistry.FLIGHT_VIEW_ATTACHMENT_TYPE.getOrDefault(entity, FlightView.VOID);
             flightView.ifFormPresent((WingForm.FormRenderer<?> form) -> {
                 RenderStateExtraData.set(entityRenderState, WING_FORM_KEY, Optional.of(form.pack(partialTick)));
@@ -102,7 +101,11 @@ public class ClientEventHandler {
             float pitch = -MathHelper.lerpDegrees(player.xRotO, player.getXRot(), partialTick) - 90.0F;
             RenderStateExtraData.set(entityRenderState, PITCH_KEY, pitch);
             if (mustPreventCrouchingOffset(player)) {
-                playerRenderState.isCrouching = false;
+                state.isCrouching = false;
+            }
+
+            if (flightView.getFlight(player).wings().isPresent()) {
+                state.showCape = false;
             }
         }
     }
