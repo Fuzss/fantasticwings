@@ -3,7 +3,7 @@
         "id": "fantasticwings",
         "group": "fuzs.fantasticwings",
         "name": "Fantastic Wings",
-        "version": "21.11.0",
+        "version": "21.11.1",
         "authors": [
             "Pau101",
             "Fuzs"
@@ -37,13 +37,13 @@
     ],
     "links": [
         {
-            "name": "github",
-            "slug": "fantasticwings"
-        },
-        {
             "name": "curseforge",
             "slug": "fantastic-wings",
             "id": "1370532"
+        },
+        {
+            "name": "github",
+            "slug": "fantasticwings"
         },
         {
             "name": "modrinth",
