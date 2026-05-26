@@ -47,11 +47,9 @@ public class ClientEventHandler {
         FlightCapability flightCapability = ModRegistry.FLIGHT_CAPABILITY.get(player);
         float amt = flightCapability.getFlyingAmount(delta);
         if (amt > 0.0F) {
-            float roll = MathHelper.lerpDegrees(
-                    player.yBodyRotO - player.yRotO,
+            float roll = MathHelper.lerpDegrees(player.yBodyRotO - player.yRotO,
                     player.yBodyRot - player.getYRot(),
-                    delta
-            );
+                    delta);
             float pitch = -MathHelper.lerpDegrees(player.xRotO, player.getXRot(), delta) - 90.0F;
             poseStack.mulPose(Axis.ZP.rotationDegrees(MathHelper.lerpDegrees(0.0F, roll, amt)));
             poseStack.mulPose(Axis.XP.rotationDegrees(MathHelper.lerpDegrees(0.0F, pitch, amt)));
@@ -60,15 +58,12 @@ public class ClientEventHandler {
     }
 
     public static void onComputeCameraAngles(GameRenderer renderer, Camera camera, float partialTick, MutableFloat pitch, MutableFloat yaw, MutableFloat roll) {
-        LivingEntity cameraEntity = (LivingEntity) camera.getEntity();
-        ModRegistry.FLIGHT_CAPABILITY.getIfProvided(cameraEntity).ifPresent(flightViewCapability -> {
+        ModRegistry.FLIGHT_CAPABILITY.getIfProvided(camera.getEntity()).ifPresent(flightViewCapability -> {
             float flyingAmount = flightViewCapability.getFlyingAmount(partialTick);
-            if (flyingAmount > 0.0F) {
-                float newRoll = MathHelper.lerpDegrees(
-                        cameraEntity.yBodyRotO - cameraEntity.yRotO,
+            if (flyingAmount > 0.0F && camera.getEntity() instanceof LivingEntity cameraEntity) {
+                float newRoll = MathHelper.lerpDegrees(cameraEntity.yBodyRotO - cameraEntity.yRotO,
                         cameraEntity.yBodyRot - cameraEntity.getYRot(),
-                        partialTick
-                );
+                        partialTick);
                 roll.accept(MathHelper.lerpDegrees(0.0F, -newRoll * 0.25F, flyingAmount));
             }
         });
@@ -89,14 +84,14 @@ public class ClientEventHandler {
 
     public static EventResult onRenderOffHand(ItemInHandRenderer itemInHandRenderer, AbstractClientPlayer player, HumanoidArm humanoidArm, ItemStack itemStack, PoseStack poseStack, MultiBufferSource multiBufferSource, int combinedLight, float partialTick, float interpolatedPitch, float swingProgress, float equipProgress) {
         if (itemStack.isEmpty() && !player.isScoping() && !player.isInvisible()) {
-            if (!itemInHandRenderer.mainHandItem.is(Items.FILLED_MAP) && ModRegistry.FLIGHT_CAPABILITY.get(player).isFlying()) {
+            if (!itemInHandRenderer.mainHandItem.is(Items.FILLED_MAP) && ModRegistry.FLIGHT_CAPABILITY.get(player)
+                    .isFlying()) {
                 itemInHandRenderer.renderPlayerArm(poseStack,
                         multiBufferSource,
                         combinedLight,
                         equipProgress,
                         swingProgress,
-                        player.getMainArm().getOpposite()
-                );
+                        player.getMainArm().getOpposite());
                 return EventResult.INTERRUPT;
             }
         }
