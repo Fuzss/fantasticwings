@@ -10,7 +10,6 @@ import net.minecraft.stats.Stats;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -21,7 +20,7 @@ public class ServerEventHandler {
 
     public static EventResult onAttackEntity(Player player, Level level, InteractionHand interactionHand, Entity entity) {
         ItemStack itemInHand = player.getItemInHand(interactionHand);
-        if (entity.getType() == EntityType.BAT && itemInHand.is(Items.GLASS_BOTTLE)) {
+        if (entity.is(ModRegistry.BAT_BLOOD_TARGETS_ENTITY_TYPE_TAG) && itemInHand.is(Items.GLASS_BOTTLE)) {
             level.playSound(player,
                     player.getX(),
                     player.getY(),
@@ -41,6 +40,7 @@ public class ServerEventHandler {
                 player.drop(itemStack, false);
             }
         }
+
         return EventResult.PASS;
     }
 

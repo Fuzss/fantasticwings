@@ -31,10 +31,10 @@ public class ModRecipeProvider extends AbstractRecipeProvider {
     @Override
     public void addRecipes(RecipeOutput recipeOutput) {
         this.bottledWings(FlightApparatuses.ANGEL_FLIGHT_APPARATUS, Items.FEATHER);
-        this.bottledWings(FlightApparatuses.PARROT_FLIGHT_APPARATUS, Items.RED_DYE);
+        this.bottledWings(FlightApparatuses.PARROT_FLIGHT_APPARATUS, Items.DYE.red());
         this.bottledWings(FlightApparatuses.SLIME_FLIGHT_APPARATUS, Items.SLIME_BALL);
-        this.bottledWings(FlightApparatuses.BLUE_BUTTERFLY_FLIGHT_APPARATUS, Items.BLUE_DYE);
-        this.bottledWings(FlightApparatuses.MONARCH_BUTTERFLY_FLIGHT_APPARATUS, Items.ORANGE_DYE);
+        this.bottledWings(FlightApparatuses.BLUE_BUTTERFLY_FLIGHT_APPARATUS, Items.DYE.blue());
+        this.bottledWings(FlightApparatuses.MONARCH_BUTTERFLY_FLIGHT_APPARATUS, Items.DYE.orange());
         this.bottledWings(FlightApparatuses.FIRE_FLIGHT_APPARATUS, Items.BLAZE_POWDER);
         this.bottledWings(FlightApparatuses.BAT_FLIGHT_APPARATUS, Items.LEATHER);
         this.bottledWings(FlightApparatuses.FAIRY_FLIGHT_APPARATUS, Items.OXEYE_DAISY);

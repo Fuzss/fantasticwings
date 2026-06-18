@@ -12,6 +12,7 @@ import fuzs.puzzleslib.common.api.attachment.v4.DataAttachmentType;
 import fuzs.puzzleslib.common.api.init.v3.registry.RegistryManager;
 import fuzs.puzzleslib.common.api.init.v3.tags.TagFactory;
 import fuzs.puzzleslib.common.api.network.v4.PlayerSet;
+import fuzs.puzzleslib.common.api.util.v1.CommonHelper;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.component.DataComponents;
@@ -20,9 +21,9 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.Consumables;
 import net.minecraft.world.item.consume_effects.ConsumeEffect;
@@ -38,17 +39,21 @@ public class ModRegistry {
             WithDescriptionItem::new,
             () -> bottledItemProperties().component(DataComponents.CONSUMABLE,
                     Consumables.defaultDrink().onConsume(new TakeWingsConsumeEffect()).build()));
-    public static final Holder.Reference<CreativeModeTab> CREATIVE_MODE_TAB = REGISTRIES.registerCreativeModeTab("main",
-            () -> new ItemStack(BOTTLED_BAT_BLOOD_ITEM),
-            (CreativeModeTab.ItemDisplayParameters itemDisplayParameters, CreativeModeTab.Output output) -> {
-                output.accept(BOTTLED_BAT_BLOOD_ITEM.value());
-                itemDisplayParameters.holders()
-                        .lookupOrThrow(FlightApparatus.REGISTRY_KEY)
-                        .listElements()
-                        .map(BottledWingsItem::createItemStack)
-                        .forEach(output::accept);
-            },
-            false);
+    public static final Holder.Reference<CreativeModeTab> CREATIVE_MODE_TAB = REGISTRIES.registerCreativeModeTab(() -> {
+        Holder.Reference<FlightApparatus> holder = CommonHelper.getRegistryAccess()
+                .lookupOrThrow(FlightApparatus.REGISTRY_KEY)
+                .getOrThrow(FlightApparatuses.MONARCH_BUTTERFLY_FLIGHT_APPARATUS);
+        return BottledWingsItem.createItemStack(holder);
+    }, (CreativeModeTab.DisplayItemsGenerator generator) -> {
+        return (CreativeModeTab.ItemDisplayParameters parameters, CreativeModeTab.Output output) -> {
+            output.accept(BOTTLED_BAT_BLOOD_ITEM.value());
+            parameters.holders()
+                    .lookupOrThrow(FlightApparatus.REGISTRY_KEY)
+                    .listElements()
+                    .map(BottledWingsItem::createItemStack)
+                    .forEach(output::accept);
+        };
+    });
     public static final Holder.Reference<ConsumeEffect.Type<GrantWingsConsumeEffect>> GRANT_WINGS_CONSUME_EFFECT_TYPE = REGISTRIES.register(
             Registries.CONSUME_EFFECT_TYPE,
             "grant_wings",
@@ -63,10 +68,12 @@ public class ModRegistry {
             "item.wings.flying");
 
     static final TagFactory TAGS = TagFactory.make(FantasticWings.MOD_ID);
-    public static final TagKey<Item> WING_OBSTRUCTIONS = TAGS.registerItemTag("wing_obstructions");
+    public static final TagKey<Item> WING_OBSTRUCTIONS_ITEM_TAG = TAGS.registerItemTag("wing_obstructions");
+    public static final TagKey<EntityType<?>> BAT_BLOOD_TARGETS_ENTITY_TYPE_TAG = TAGS.registerEntityTypeTag(
+            "bat_blood_targets");
 
     public static final DataAttachmentType<Entity, Flight> FLIGHT_ATTACHMENT_TYPE = DataAttachmentRegistry.<Flight>entityBuilder()
-            .defaultValue(EntityType.PLAYER, Flight.VOID)
+            .defaultValue(EntityTypes.PLAYER, Flight.VOID)
             .persistent(Flight.CODEC)
             .networkSynchronized(Flight.STREAM_CODEC, PlayerSet::nearEntity)
             .build(FantasticWings.id("flight"));

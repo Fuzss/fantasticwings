@@ -1,10 +1,10 @@
 {
-    "minecraft": "26.1.2",
+    "minecraft": "26.2",
     "mod": {
         "id": "fantasticwings",
         "group": "fuzs.fantasticwings",
         "name": "Fantastic Wings",
-        "version": "26.1.1",
+        "version": "26.2.0",
         "authors": [
             "Pau101",
             "Fuzs"

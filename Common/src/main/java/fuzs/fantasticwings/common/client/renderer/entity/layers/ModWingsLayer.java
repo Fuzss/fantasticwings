@@ -32,7 +32,7 @@ public class ModWingsLayer extends RenderLayer<AvatarRenderState, PlayerModel> {
 
     @Override
     public void submit(PoseStack poseStack, SubmitNodeCollector nodeCollector, int packedLight, AvatarRenderState renderState, float yRot, float xRot) {
-        if (!renderState.isInvisible && !renderState.chestEquipment.is(ModRegistry.WING_OBSTRUCTIONS)) {
+        if (!renderState.isInvisible && !renderState.chestEquipment.is(ModRegistry.WING_OBSTRUCTIONS_ITEM_TAG)) {
             RenderStateExtraData.getOrDefault(renderState, ClientEventHandler.WING_FORM_KEY, Optional.empty())
                     .ifPresent((WingForm.FormRendererState<?> form) -> {
                         poseStack.pushPose();
@@ -44,7 +44,7 @@ public class ModWingsLayer extends RenderLayer<AvatarRenderState, PlayerModel> {
                         this.getParentModel().body.translateAndRotate(poseStack);
                         form.submitModel(poseStack,
                                 nodeCollector,
-                                RenderTypes::entityCutout,
+                                RenderTypes::entityCutoutCull,
                                 packedLight,
                                 renderState.outlineColor);
                         poseStack.popPose();

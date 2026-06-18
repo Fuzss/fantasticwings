@@ -19,7 +19,7 @@ import fuzs.puzzleslib.common.api.client.core.v1.context.ItemModelsContext;
 import fuzs.puzzleslib.common.api.client.core.v1.context.KeyMappingsContext;
 import fuzs.puzzleslib.common.api.client.core.v1.context.LayerDefinitionsContext;
 import fuzs.puzzleslib.common.api.client.core.v1.context.ResourcePackReloadListenersContext;
-import fuzs.puzzleslib.common.api.client.event.v1.entity.ClientEntityLevelEvents;
+import fuzs.puzzleslib.common.api.client.event.v1.entity.ClientEntityEvents;
 import fuzs.puzzleslib.common.api.client.event.v1.renderer.AddLivingEntityRenderLayersCallback;
 import fuzs.puzzleslib.common.api.client.event.v1.renderer.ComputeCameraAnglesCallback;
 import fuzs.puzzleslib.common.api.client.event.v1.renderer.ExtractEntityRenderStateCallback;
@@ -41,7 +41,7 @@ public class FantasticWingsClient implements ClientModConstructor {
 
     private static void registerEventHandlers() {
         ComputeCameraAnglesCallback.EVENT.register(ClientEventHandler::onComputeCameraAngles);
-        ClientEntityLevelEvents.LOAD.register(ClientEventHandler::onEntityLoad);
+        ClientEntityEvents.LOAD.register(ClientEventHandler::onEntityLoad);
         PlayerTickEvents.END.register(FlightView::onEndPlayerTick);
         ExtractEntityRenderStateCallback.EVENT.register(ClientEventHandler::onExtractEntityRenderState);
         RenderHandEvents.OFF_HAND.register(ClientEventHandler::onRenderOffHand);

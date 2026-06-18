@@ -92,7 +92,7 @@ public record Flight(Optional<Holder<FlightApparatus>> wings, boolean isFlying, 
 
     public boolean canUseWings(Player player) {
         return !player.getAbilities().flying && !player.getItemBySlot(EquipmentSlot.CHEST)
-                .is(ModRegistry.WING_OBSTRUCTIONS);
+                .is(ModRegistry.WING_OBSTRUCTIONS_ITEM_TAG);
     }
 
     public boolean canFly(Player player) {
