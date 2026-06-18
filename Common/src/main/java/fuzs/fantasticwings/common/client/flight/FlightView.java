@@ -15,6 +15,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 public record FlightView(WingState state) {
     public static final FlightView VOID = new FlightView(PresentWingState.VOID);
@@ -142,6 +143,11 @@ public record FlightView(WingState state) {
             public void ifFormPresent(Consumer<WingForm.FormRenderer<?>> consumer) {
                 consumer.accept(new WingForm.FormRenderer<S>() {
                     @Override
+                    public Function<Identifier, RenderType> getRenderType() {
+                        return WingStrategy.this.shape.getModel().renderType();
+                    }
+
+                    @Override
                     public Identifier getTextureLocation() {
                         return WingStrategy.this.shape.getTextureLocation();
                     }
@@ -154,12 +160,12 @@ public record FlightView(WingState state) {
                     }
 
                     @Override
-                    public void submitModel(S renderState, PoseStack poseStack, SubmitNodeCollector nodeCollector, RenderType renderType, int packedLight, int outlineColor) {
+                    public void submitModel(S renderState, PoseStack poseStack, SubmitNodeCollector nodeCollector, RenderType renderType, int lightCoords, int outlineColor) {
                         nodeCollector.submitModel(WingStrategy.this.shape.getModel(),
                                 renderState,
                                 poseStack,
                                 renderType,
-                                packedLight,
+                                lightCoords,
                                 OverlayTexture.NO_OVERLAY,
                                 outlineColor,
                                 null);

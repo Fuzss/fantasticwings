@@ -4,11 +4,11 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import fuzs.fantasticwings.common.client.animator.Animator;
 import fuzs.fantasticwings.common.client.model.WingsModel;
 import fuzs.fantasticwings.common.flight.apparatus.FlightApparatus;
-import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.core.Holder;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 
 import java.util.Optional;
 import java.util.function.Function;
@@ -56,7 +56,13 @@ public final class WingForm<A extends Animator<S>, S> {
 
     public interface FormRenderer<S> {
 
+        Function<Identifier, RenderType> getRenderType();
+
         Identifier getTextureLocation();
+
+        default RenderType renderType() {
+            return this.getRenderType().apply(this.getTextureLocation());
+        }
 
         S createRenderState(float partialTick);
 
@@ -64,18 +70,17 @@ public final class WingForm<A extends Animator<S>, S> {
             return new FormRendererState<>(this, this.createRenderState(partialTick));
         }
 
-        void submitModel(S renderState, PoseStack poseStack, SubmitNodeCollector nodeCollector, RenderType renderType, int packedLight, int outlineColor);
+        void submitModel(S renderState, PoseStack poseStack, SubmitNodeCollector nodeCollector, RenderType renderType, int lightCoords, int outlineColor);
     }
 
     public record FormRendererState<S>(FormRenderer<S> form, S state) {
 
-        public void submitModel(PoseStack poseStack, SubmitNodeCollector nodeCollector, Function<Identifier, RenderType> renderTypeGetter, int packedLight, int outlineColor) {
-            this.form.submitModel(this.state,
-                    poseStack,
-                    nodeCollector,
-                    renderTypeGetter.apply(this.form.getTextureLocation()),
-                    packedLight,
-                    outlineColor);
+        public void submitModel(PoseStack poseStack, SubmitNodeCollector nodeCollector, int lightCoords, int outlineColor) {
+            this.submitModel(poseStack, nodeCollector, this.form.renderType(), lightCoords, outlineColor);
+        }
+
+        public void submitModel(PoseStack poseStack, SubmitNodeCollector nodeCollector, RenderType renderType, int lightCoords, int outlineColor) {
+            this.form.submitModel(this.state, poseStack, nodeCollector, renderType, lightCoords, outlineColor);
         }
     }
 }

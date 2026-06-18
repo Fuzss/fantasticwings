@@ -13,7 +13,6 @@ import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.player.AvatarRenderer;
 import net.minecraft.client.renderer.entity.state.AvatarRenderState;
-import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.world.entity.EntityType;
 
 import java.util.Optional;
@@ -31,22 +30,18 @@ public class ModWingsLayer extends RenderLayer<AvatarRenderState, PlayerModel> {
     }
 
     @Override
-    public void submit(PoseStack poseStack, SubmitNodeCollector nodeCollector, int packedLight, AvatarRenderState renderState, float yRot, float xRot) {
-        if (!renderState.isInvisible && !renderState.chestEquipment.is(ModRegistry.WING_OBSTRUCTIONS_ITEM_TAG)) {
-            RenderStateExtraData.getOrDefault(renderState, ClientEventHandler.WING_FORM_KEY, Optional.empty())
+    public void submit(PoseStack poseStack, SubmitNodeCollector nodeCollector, int lightCoords, AvatarRenderState state, float yRot, float xRot) {
+        if (!state.isInvisible && !state.chestEquipment.is(ModRegistry.WING_OBSTRUCTIONS_ITEM_TAG)) {
+            RenderStateExtraData.getOrDefault(state, ClientEventHandler.WING_FORM_KEY, Optional.empty())
                     .ifPresent((WingForm.FormRendererState<?> form) -> {
                         poseStack.pushPose();
                         poseStack.translate(0.0, -0.0625, 0.0);
-                        if (!renderState.chestEquipment.isEmpty()) {
+                        if (!state.chestEquipment.isEmpty()) {
                             poseStack.translate(0.0, 0.0, 0.0625);
                         }
 
                         this.getParentModel().body.translateAndRotate(poseStack);
-                        form.submitModel(poseStack,
-                                nodeCollector,
-                                RenderTypes::entityCutoutCull,
-                                packedLight,
-                                renderState.outlineColor);
+                        form.submitModel(poseStack, nodeCollector, lightCoords, state.outlineColor);
                         poseStack.popPose();
                     });
         }
