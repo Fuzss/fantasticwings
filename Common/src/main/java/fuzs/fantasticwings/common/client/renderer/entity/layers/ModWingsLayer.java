@@ -44,7 +44,7 @@ public class ModWingsLayer extends RenderLayer<AvatarRenderState, PlayerModel> {
                         this.getParentModel().body.translateAndRotate(poseStack);
                         form.submitModel(poseStack,
                                 nodeCollector,
-                                RenderTypes::entityCutout,
+                                RenderTypes::entityCutoutCull,
                                 packedLight,
                                 renderState.outlineColor);
                         poseStack.popPose();
