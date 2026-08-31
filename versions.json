@@ -4,5 +4,12 @@
     "1.21.1": "maintained",
     "26.1.x": "maintained",
     "26.2.x": "primary"
+  },
+  "properties": {
+    "distributions.curseforge.id": "1370532",
+    "distributions.curseforge.slug": "fantastic-wings",
+    "distributions.github.slug": "fantastic-wings",
+    "distributions.modrinth.id": "iGEcTqwK",
+    "distributions.modrinth.slug": "fantastic-wings"
   }
 }
