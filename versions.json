@@ -5,11 +5,17 @@
     "26.1.x": "maintained",
     "26.2.x": "primary"
   },
-  "properties": {
-    "distributions.curseforge.id": "1370532",
-    "distributions.curseforge.slug": "fantastic-wings",
-    "distributions.github.slug": "fantastic-wings",
-    "distributions.modrinth.id": "iGEcTqwK",
-    "distributions.modrinth.slug": "fantastic-wings"
+  "distributions": {
+    "curseforge": {
+      "id": "1370532",
+      "slug": "fantastic-wings"
+    },
+    "github": {
+      "slug": "fantastic-wings"
+    },
+    "modrinth": {
+      "id": "iGEcTqwK",
+      "slug": "fantastic-wings"
+    }
   }
 }
